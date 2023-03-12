@@ -14,7 +14,8 @@ app.use(cors());
 
 app.use("/auth", userRouter);
 
-mongoose.connect("mongodb+srv://mrayushchauhan351:xu0WHvV9E9gpje6Q@cluster0.0rhhg4g.mongodb.net/?retryWrites=true&w=majority")
+// Name of database which is being connected is 'recipes' -> written after mongodb.net here -:
+mongoose.connect("mongodb+srv://mrayushchauhan351:xu0WHvV9E9gpje6Q@cluster0.0rhhg4g.mongodb.net/recipes?retryWrites=true&w=majority")
 
 app.listen(5000, () => {
     console.log("Server running at port 5000");
