@@ -9,7 +9,7 @@ function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [, setCookies] = useCookies(["access-token"]);
+    const [, setCookies] = useCookies(["access_token"]);
 
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ function Login(){
                 password
             })
 
-            setCookies("access-token", response.data.token);
+            setCookies("access_token", response.data.token);
             window.localStorage.setItem("userID", response.data.userID);
             navigate("/");
         }
