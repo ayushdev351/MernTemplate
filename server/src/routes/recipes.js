@@ -1,5 +1,6 @@
 import express from 'express';
 
+import { UserModel } from '../models/users.js';
 import { RecipesModel } from '../models/recipes.js'; // need to write .js
 
 const router = express.Router();
@@ -25,6 +26,43 @@ router.post('/', async(req, res) => {
     }
     catch(err){
         res.json(err);
+    }
+})
+
+router.put('/', async(req, res) => {
+    try{
+        const user = await UserModel.findById(req.body.userID);
+        const recipe = await RecipesModel.findById(req.body.recipeID);
+
+        user.savedRecipes.push(recipe);
+        await user.save();
+        res.json({savedRecipes : user.savedRecipes});
+    }
+    catch(err){
+        console.error(err);
+    }
+})
+
+router.get('/savedRecipes/ids', async(req, res) => {
+    try{
+        const user = await UserModel.findById(req.body.userID);
+        res.json({savedRecipes : user?.savedRecipes});
+    }
+    catch(err){
+        console.error(err);
+    }
+})
+
+router.get('/savedRecipes', async(req, res) => {
+    try{
+        const user = await UserModel.findById(req.body.userID);
+        const savedRecipes = await RecipesModel.find({
+            _id : { $in : user.savedRecipes},
+        });
+        res.json({savedRecipes : user?.savedRecipes});
+    }
+    catch(err){
+        res.error(err);
     }
 })
 
